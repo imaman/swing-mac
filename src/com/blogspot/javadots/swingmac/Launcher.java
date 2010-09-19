@@ -9,7 +9,7 @@ import org.simplericity.macify.eawt.*;
 public class Launcher {
 
 	private static void macSetup(String appName) {
-      String os = System.getProperty("os.name").toLowerCase();
+	   String os = System.getProperty("os.name").toLowerCase();
       boolean isMac = os.startsWith("mac os x");     
 
       if(!isMac)
