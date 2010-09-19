@@ -10,6 +10,9 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+/**
+ * This is how you should *not* write an OSX complaint Swing app
+ */
 public class Wrong  {
 
    private JFrame f;
