@@ -1,14 +1,14 @@
 package com.blogspot.javadots.swingmac;
 
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import javax.swing.*;
+import org.simplericity.macify.eawt.*;
 
-import org.simplericity.macify.eawt.Application;
-import org.simplericity.macify.eawt.DefaultApplication;
+// Should be a dedicated class: prevent UI interactions that may take place 
+// due to initialization of static fields/class loading
 
 public class Launcher {
 
-	private static void macSetup() {
+	private static void macSetup(String appName) {
       String os = System.getProperty("os.name").toLowerCase();
       boolean isMac = os.startsWith("mac os x");     
 
@@ -16,12 +16,14 @@ public class Launcher {
          return;
       
 		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		System.setProperty("com.apple.mrj.application.apple.menu.about.name", "swing-mac");		
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", 
+		   appName);		
 	}
 	
 	public static void main(String[] args) throws Exception {
-		macSetup();
-		
+	
+	   // Must be before setLookAndFeel
+		macSetup("swing-mac");
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		
 		SwingUtilities.invokeLater(new Runnable() {
@@ -31,9 +33,9 @@ public class Launcher {
             
             Application app = new DefaultApplication();
 
-            Main main = new Main();
+            Main main = new Main();            
+            app.addApplicationListener(main.getApplicationListener());
             
-            app.addApplicationListener(main);
             app.addPreferencesMenuItem();
             app.setEnabledPreferencesMenu(true);            
          }
